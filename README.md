@@ -137,3 +137,4 @@ student-performance-prediction/
 - Be ready to explain: what MAE/R²/accuracy mean, why Linear vs Logistic
   Regression, and how you'd improve it (more features, cross-validation,
   a better model like Random Forest).
+# student-performance-prediction
