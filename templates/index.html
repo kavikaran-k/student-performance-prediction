@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <h1>Predict Student Academic Performance</h1>
+    <p>A machine learning system that predicts a student's final score and pass/fail outcome
+       based on study habits, attendance, and lifestyle factors — helping educators identify
+       students who need early support.</p>
+
+    {% if not model_ready %}
+    <div class="alert">⚠️ Model not trained yet. Run <code>python model/train_model.py</code> first.</div>
+    {% endif %}
+
+    <a href="{{ url_for('predict') }}" class="btn">Try a Prediction →</a>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline">View Dashboard</a>
+</section>
+
+<section class="features">
+    <div class="card">
+        <h3>🧠 Linear Regression</h3>
+        <p>Predicts the student's numeric final score (0-100) using their study patterns.</p>
+    </div>
+    <div class="card">
+        <h3>✅ Logistic Regression</h3>
+        <p>Classifies the likely outcome as Pass or Fail, giving early-warning insight.</p>
+    </div>
+    <div class="card">
+        <h3>📈 Live Dashboard</h3>
+        <p>Every prediction is stored in SQLite and visualized on an analytics dashboard.</p>
+    </div>
+</section>
+{% endblock %}

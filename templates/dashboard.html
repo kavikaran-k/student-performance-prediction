@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Analytics Dashboard</h1>
+
+<div class="stats-grid">
+    <div class="stat-box"><span>{{ total }}</span><p>Total Predictions</p></div>
+    <div class="stat-box pass"><span>{{ passed }}</span><p>Pass</p></div>
+    <div class="stat-box fail"><span>{{ failed }}</span><p>Fail</p></div>
+    <div class="stat-box"><span>{{ avg_score }}</span><p>Avg Predicted Score</p></div>
+</div>
+
+{% if metrics %}
+<div class="metrics-box">
+    <strong>Model Performance:</strong>
+    R² Score: {{ metrics.r2 }} &nbsp;|&nbsp;
+    MAE: {{ metrics.mae }} &nbsp;|&nbsp;
+    Classifier Accuracy: {{ metrics.accuracy }}%
+</div>
+{% endif %}
+
+<canvas id="scoreChart" height="90"></canvas>
+
+<h2>Recent Predictions</h2>
+<table class="data-table">
+    <tr>
+        <th>Name</th><th>Study Hrs</th><th>Attendance</th><th>Score</th><th>Result</th><th></th>
+    </tr>
+    {% for r in rows %}
+    <tr>
+        <td>{{ r.student_name }}</td>
+        <td>{{ r.study_hours }}</td>
+        <td>{{ r.attendance }}%</td>
+        <td>{{ r.predicted_score }}</td>
+        <td class="{{ 'pass-text' if r.predicted_result == 'Pass' else 'fail-text' }}">{{ r.predicted_result }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('delete', pred_id=r.id) }}">
+                <button class="btn-del" type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No predictions yet. <a href="{{ url_for('predict') }}">Make one →</a></td></tr>
+    {% endfor %}
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const ctx = document.getElementById('scoreChart');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ chart_labels | tojson }},
+        datasets: [{
+            label: 'Predicted Score',
+            data: {{ chart_scores | tojson }},
+            backgroundColor: '#4f46e5'
+        }]
+    },
+    options: { scales: { y: { beginAtZero: true, max: 100 } } }
+});
+</script>
+{% endblock %}

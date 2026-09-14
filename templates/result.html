@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="result-card {{ 'pass' if result == 'Pass' else 'fail' }}">
+    <h2>{{ name }}'s Predicted Result</h2>
+    <div class="score-circle">{{ score }}</div>
+    <p class="result-label">{{ result }}</p>
+    <p>{% if result == 'Pass' %}Great! The model predicts a passing performance based on the given inputs.
+       {% else %}The model predicts risk of failing. Consider improving study hours or attendance.{% endif %}</p>
+    <a href="{{ url_for('predict') }}" class="btn">Predict Another</a>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline">View Dashboard</a>
+</div>
+{% endblock %}

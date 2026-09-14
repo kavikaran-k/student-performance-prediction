@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Enter Student Details</h1>
+
+{% if error %}
+<div class="alert">{{ error }}</div>
+{% else %}
+<form method="POST" class="form-card">
+    <label>Student Name</label>
+    <input type="text" name="student_name" placeholder="e.g. Kavikaran K" required>
+
+    <label>Study Hours / Day (0-12)</label>
+    <input type="number" step="0.1" min="0" max="12" name="study_hours" required>
+
+    <label>Attendance % (30-100)</label>
+    <input type="number" step="0.1" min="30" max="100" name="attendance" required>
+
+    <label>Previous Exam Score (0-100)</label>
+    <input type="number" step="0.1" min="0" max="100" name="previous_score" required>
+
+    <label>Sleep Hours / Day (3-10)</label>
+    <input type="number" step="0.1" min="3" max="10" name="sleep_hours" required>
+
+    <label>Extra-curricular Activities</label>
+    <select name="extra_activities">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
+
+    <label>Internet Access at Home</label>
+    <select name="internet_access">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
+
+    <button type="submit" class="btn">Predict Performance</button>
+</form>
+{% endif %}
+{% endblock %}
