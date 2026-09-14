@@ -40,7 +40,7 @@ def get_db():
 bundle = None
 if os.path.exists(MODEL_PATH):
     bundle = joblib.load(MODEL_PATH)
-
+init_db()
 # ---------- Routes ----------
 @app.route("/")
 def index():
@@ -115,5 +115,4 @@ def delete(pred_id):
     return redirect(url_for("dashboard"))
 
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True, host="0.0.0.0", port=5000)
